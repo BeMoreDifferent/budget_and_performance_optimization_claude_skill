@@ -57,6 +57,95 @@ Each run produces a fresh performance feedback package with budget recommendatio
   - conservative budget point,
   - per-channel recommended budget ranges.
 
+## Mathematical deep dive
+
+At entity level `i` and time bucket `t`:
+
+- Saturation response:
+  - `g_i(b) = b^a / (b^a + theta^a)`
+- Incremental value component:
+  - `inc_i(b) = V_i * u_i * g_i(b)`
+- Risk-adjusted score:
+  - `score_i(b) = E[inc_i(b)] - gamma * SD[inc_i(b)] - lambda * (b - b_prev)^2`
+
+The optimizer allocates budget across campaigns by maximizing total score:
+
+- `max Σ_i score_i(b_i)`
+
+subject to hard constraints:
+
+- `Σ_i b_i = B`
+- per-campaign bounds: `min_i <= b_i <= max_i`
+- step constraint: `|b_i - b_prev_i| <= step_pct * max(1, b_prev_i)`
+- channel caps: `Σ_{i in channel c} b_i <= cap_c`
+- uncertainty gate for increases: allow `b_i > b_prev_i` only if `P(u_i > u_min) >= 1 - alpha`
+
+For target incremental revenue `X`, budget sweep is solved over feasible `B` and reports:
+
+- optimistic budget (`u + z*sd`)
+- expected budget (`u`)
+- conservative budget (`max(0, u - z*sd)`)
+
+This produces robust budget ranges rather than single-point recommendations.
+
+## Reliability deep dive (tested)
+
+Reliability is enforced by design and validated with smoke/regression tests:
+
+- hard stop when outcome source is disconnected
+- proxy-secondary behavior with conservative trust updates
+- proxy gating based on information score
+- uncertainty gate blocks unsafe budget increases
+- cold-start budget feasibility in ad-account mode
+- campaign bounds and channel caps enforced
+- paid-channel-only enforcement
+- optimizer feasibility flags for unreachable targets
+- low-volume smoothing toward prior state
+
+Test command:
+
+```bash
+./uplift-allocator/.venv/bin/python -m unittest discover -s ./uplift-allocator/tests -v
+```
+
+## Logical hierarchy
+
+1. **Data trust layer**
+- outcome connectivity gate
+- unified 12-hour data view
+
+2. **Signal quality layer**
+- outcome-first modeling
+- proxy-secondary checks
+- low-volume stabilization
+
+3. **Decision layer**
+- risk-adjusted campaign allocation
+- step/churn/inertia control
+- bounds and cap enforcement
+
+4. **Governance layer**
+- verification and hard-fail alerts
+- explainability artifacts
+- target-`X` feasibility outputs
+
+## Visual overview
+
+```mermaid
+flowchart TD
+    A["12h Trigger (OpenClaw / Codex / Claude)"] --> B{"Outcome Data Connected?"}
+    B -- "No" --> C["Hard Stop + Guidance"]
+    B -- "Yes" --> D["Build Unified 12h View"]
+    D --> E["Evaluate Proxy Trust (Secondary)"]
+    E --> F["Update Uplift State + Uncertainty"]
+    F --> G["Filter Paid Channels"]
+    G --> H["Optimize Campaign Budgets"]
+    H --> I["Verify Constraints + Risk Gates"]
+    I --> J["allocation_plan.json"]
+    I --> K["alerts.json"]
+    H --> L["optimal_budget_range.json (target X)"]
+```
+
 ## Ideal use cases
 
 - Growth teams running multi-channel paid acquisition.
