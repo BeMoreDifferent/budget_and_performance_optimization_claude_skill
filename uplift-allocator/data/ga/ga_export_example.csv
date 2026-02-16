@@ -1,0 +1,4 @@
+time,default_channel_group,campaign,source_medium,revenue,purchases
+2026-02-15T00:00:00Z,Organic Search,brand,google / organic,120.0,1
+2026-02-15T12:00:00Z,Paid Search,prospecting,google / cpc,0.0,0
+2026-02-15T12:00:00Z,Paid Social,retarget,facebook / cpc,80.0,1

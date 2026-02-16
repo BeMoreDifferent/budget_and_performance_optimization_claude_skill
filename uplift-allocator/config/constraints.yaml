@@ -1,0 +1,9 @@
+budget_total: 20000.0
+
+bounds_default:
+  min: 0.0
+  max:
+
+# Optional caps
+channel_caps: {}
+campaign_bounds: {}

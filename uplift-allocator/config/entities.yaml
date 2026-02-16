@@ -1,0 +1,3 @@
+# If ad accounts exist, enumerate here (campaign-level). If not, skill uses GA-derived entities.
+entities: []
+parents: []

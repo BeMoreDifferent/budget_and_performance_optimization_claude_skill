@@ -1,0 +1,72 @@
+timezone: Europe/Berlin
+cadence_hours: 12
+fit_window_days: 28
+
+# Proxy secondary gate
+I_min_buckets_with_revenue: 6
+I_min_purchases_sum: 10
+
+# Uplift gating + stability
+u_min: 0.02
+alpha_gate: 0.10        # 90% to increase
+step_pct_limit: 0.05
+daily_churn_limit: 0.10
+lambda_inertia: 0.002
+gamma_risk: 1.0
+
+# Proxy conservatism defaults
+proxy:
+  tau_w: 0.03           # very strong shrinkage
+  sigma_init: 3.0       # very noisy by default
+  sigma_floor: 1.0
+  sigma_ceiling: 8.0
+  r_max_influence: 0.25 # stricter
+
+# Paid-only allocation policy
+paid_channel_policy:
+  exact_paid_channels:
+    - Paid Search
+    - Paid Social
+    - Display
+    - Affiliate
+  exact_unpaid_channels:
+    - Organic Search
+    - Direct
+    - Referral
+  include_keywords:
+    - paid
+    - cpc
+    - ppc
+    - display
+    - shopping
+    - affiliate
+    - sponsored
+    - ads
+    - retarget
+    - prospecting
+    - meta
+    - facebook
+    - instagram
+    - tiktok
+    - linkedin
+    - youtube
+    - google ads
+    - bing ads
+    - snapchat
+    - pinterest
+  exclude_keywords:
+    - organic
+    - direct
+    - referral
+    - seo
+    - unassigned
+    - "(none)"
+
+optimizer:
+  z_score: 1.28
+  grid_points: 41
+
+stability:
+  smoothing_buckets: 4
+  min_update_weight: 0.20
+  info_for_full_update: 12

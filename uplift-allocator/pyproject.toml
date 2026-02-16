@@ -1,0 +1,13 @@
+[project]
+name = "uplift-allocator-skill"
+version = "0.1.0"
+description = "GA-first uplift allocator Claude skill"
+requires-python = ">=3.10"
+dependencies = [
+  "pandas>=2.2,<3",
+  "numpy>=1.26,<3",
+  "PyYAML>=6.0,<7",
+]
+
+[tool.unittest]
+start-directory = "uplift-allocator/tests"
