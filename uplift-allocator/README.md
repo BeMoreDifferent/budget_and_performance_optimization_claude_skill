@@ -7,12 +7,12 @@ It is designed as a high-complexity optimization system for reliable steering of
 
 ## 12-Hour AI feedback loop
 
-Run this skill every 12 hours with your preferred AI runtime:
+This skill is designed for fully autonomous 12-hour execution by your preferred AI runtime:
 - OpenClaw
 - ChatGPT Codex
 - Claude
 
-Each run produces a fresh performance feedback package with budget recommendations, explanations, and risk alerts.
+Each autonomous cycle produces a fresh performance feedback package with budget recommendations, explanations, and risk alerts.
 
 ## Why this makes life better for business teams
 
@@ -102,11 +102,7 @@ Reliability is enforced by design and validated with smoke/regression tests:
 - optimizer feasibility flags for unreachable targets
 - low-volume smoothing toward prior state
 
-Test command:
-
-```bash
-./uplift-allocator/.venv/bin/python -m unittest discover -s ./uplift-allocator/tests -v
-```
+Validation is part of the engineering control system so autonomous runs remain consistent and auditable.
 
 ## Logical hierarchy
 
@@ -171,20 +167,11 @@ uplift-allocator/
   tests/
 ```
 
-## Quick start
+## Autonomous execution model
 
-From repository root:
-
-```bash
-python ./uplift-allocator/scripts/run.py run --horizon 12h --budget 20000
-python ./uplift-allocator/scripts/run.py optimize_budget --target-incremental-revenue 250 --horizon 12h
-```
-
-## Tests
-
-```bash
-./uplift-allocator/.venv/bin/python -m unittest discover -s ./uplift-allocator/tests -v
-```
+- AI agent owns orchestration, execution, and feedback generation.
+- Mathematical constraints and gating logic enforce consistency.
+- Human users consume outputs, not operational commands.
 
 ## Core outputs
 
