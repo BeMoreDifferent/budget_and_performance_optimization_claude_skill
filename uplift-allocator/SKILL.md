@@ -1,6 +1,6 @@
 ---
 name: uplift-allocator
-description: AI skill for consistent, reliable 12-hour optimization of paid marketing budgets. Uses incremental uplift with conservative proxy handling, campaign-level allocation, and verification outputs.
+description: Agent Skill for AgentSkills.io focused on consistent, reliable 12-hour optimization of paid marketing budgets with incremental uplift, conservative proxy handling, campaign-level allocation, and verification outputs.
 argument-hint: "[run|build|proxies|model|allocate|verify|optimize_budget] [--start ISO] [--end ISO] [--horizon 12h|24h] [--budget NUMBER] [--target-incremental-revenue NUMBER]"
 allowed-tools: Read, Write, Bash
 disable-model-invocation: true

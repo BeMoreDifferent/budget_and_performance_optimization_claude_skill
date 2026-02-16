@@ -4,6 +4,7 @@
 
 Uplift Allocator is an AI-first, contract-first optimization skill for teams that need to scale paid growth without guesswork. It combines incremental uplift logic, strict risk controls, and paid-channel-only budget execution so business users can make faster decisions with higher confidence.
 It is designed as a high-complexity optimization system for reliable steering of advertising accounts from strategy level to campaign level.
+It is built and positioned as an **Agent Skill** for [AgentSkills.io](https://agentskills.io/home).
 
 ## 12-Hour AI feedback loop
 
