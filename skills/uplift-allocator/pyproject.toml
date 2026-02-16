@@ -1,7 +1,7 @@
 [project]
 name = "uplift-allocator-skill"
 version = "0.1.0"
-description = "GA-first uplift allocator Claude skill"
+description = "Autonomous marketing budget optimization agent skill"
 requires-python = ">=3.10"
 dependencies = [
   "pandas>=2.2,<3",
@@ -10,4 +10,4 @@ dependencies = [
 ]
 
 [tool.unittest]
-start-directory = "uplift-allocator/tests"
+start-directory = "skills/uplift-allocator/tests"

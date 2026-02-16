@@ -4,11 +4,11 @@ __pycache__/
 .DS_Store
 
 # Local virtual env
-/uplift-allocator/.venv/
+/skills/uplift-allocator/.venv/
 
 # Test temp workspace
-/uplift-allocator/.tmp_test/
+/skills/uplift-allocator/.tmp_test/
 
 # Runtime artifacts (generated outputs)
-/uplift-allocator/artifacts/*
-!/uplift-allocator/artifacts/ga_connection_status.json
+/skills/uplift-allocator/artifacts/*
+!/skills/uplift-allocator/artifacts/ga_connection_status.json

@@ -1,0 +1,6 @@
+{
+  "name": "uplift-allocator",
+  "version": "0.1.0",
+  "description": "Autonomous 12-hour marketing budget optimization agent skill",
+  "skills": ["skills/uplift-allocator"]
+}

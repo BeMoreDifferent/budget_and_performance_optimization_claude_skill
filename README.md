@@ -1,61 +1,24 @@
 # Uplift Allocator Skill
 
-**The fastest way to turn growth strategy into reliable campaign-level budget actions every 12 hours.**
+**An autonomous Agent Skill for consistent, reliable 12-hour optimization of paid marketing budgets.**
 
-Uplift Allocator is an AI-first, contract-first optimization skill for teams that need to scale paid growth without guesswork. It combines incremental uplift logic, strict risk controls, and paid-channel-only budget execution so business users can make faster decisions with higher confidence.
-It is designed as a high-complexity optimization system for reliable steering of advertising accounts from strategy level to campaign level.
+Uplift Allocator is a high-complexity optimization system for steering advertising accounts from strategy level to campaign level. The AI runtime owns orchestration. The mathematical control logic owns consistency.
 
-## 12-Hour AI feedback loop
+## 12-Hour autonomous AI loop
 
-This skill is designed for fully autonomous 12-hour execution by your preferred AI runtime:
+Designed for autonomous execution every 12 hours by:
 - OpenClaw
 - ChatGPT Codex
 - Claude
 
-Each autonomous cycle produces a fresh performance feedback package with budget recommendations, explanations, and risk alerts.
+Each cycle produces budget recommendations, reliability checks, and explainability artifacts.
 
-## Why this makes life better for business teams
+## Core value
 
-- **Faster decisions with lower risk:** refreshes allocation logic every 12 hours without sudden swings.
-- **More reliable than proxy-led optimization:** GA revenue/purchases are the source of truth; proxies are secondary indicators only.
-- **Built for executive clarity:** outputs explainable plans, uncertainty-aware recommendations, and hard-fail alerts.
-- **Protects spend quality:** enforces paid-channel-only allocation and blocks unsafe reallocations.
-- **Supports growth + ROI together:** balances incremental upside, uncertainty, inertia, and churn constraints.
-
-## Business value outcomes
-
-- Improved budget efficiency across paid channels, audiences, and campaigns.
-- More predictable performance in low-volume environments.
-- Fewer reactive decisions driven by noisy short-term signals.
-- Clearer communication between performance marketing, finance, and leadership.
-
-## Core capabilities
-
-1. **Outcome Data Gate**
-- If outcome data is not connected, the run hard-stops to prevent low-trust optimization.
-- Secure GA connection recommendation: [SAFE MCP](https://safe-mcp.com/).
-
-2. **12-Hour Unified Growth View**
-- Creates a consistent 12-hour view combining GA outcomes with optional spend and proxy data.
-
-3. **Incremental Uplift Modeling**
-- Uses GA outcomes to update uplift states and uncertainty per entity.
-- Includes low-volume stabilization to avoid overreaction in sparse-conversion scenarios.
-
-4. **Proxy-Secondary Policy**
-- Proxies are used only when GA signal is insufficient.
-- Proxy trust is conservative and bounded; proxies are never directly optimized.
-
-5. **Campaign-Level Budget Allocation**
-- Allocates at campaign granularity with uncertainty gates, step limits, inertia, and churn controls.
-- Enforces bounds/caps and paid-channel-only execution.
-
-6. **Optimal Budget Sweet-Spot for Target X**
-- Given a target incremental revenue `X`, outputs:
-  - optimistic budget point,
-  - expected budget point,
-  - conservative budget point,
-  - per-channel recommended budget ranges.
+- Reliable campaign budget steering with strict risk controls.
+- Incremental uplift optimization with proxy signals treated as secondary.
+- Paid-channel-only allocation to protect spend quality.
+- Stable behavior in low-volume environments.
 
 ## Mathematical deep dive
 
@@ -63,12 +26,12 @@ At entity level `i` and time bucket `t`:
 
 - Saturation response:
   - `g_i(b) = b^a / (b^a + theta^a)`
-- Incremental value component:
+- Incremental component:
   - `inc_i(b) = V_i * u_i * g_i(b)`
-- Risk-adjusted score:
+- Risk-adjusted objective:
   - `score_i(b) = E[inc_i(b)] - gamma * SD[inc_i(b)] - lambda * (b - b_prev)^2`
 
-The optimizer allocates budget across campaigns by maximizing total score:
+Global optimizer:
 
 - `max Σ_i score_i(b_i)`
 
@@ -78,33 +41,11 @@ subject to hard constraints:
 - per-campaign bounds: `min_i <= b_i <= max_i`
 - step constraint: `|b_i - b_prev_i| <= step_pct * max(1, b_prev_i)`
 - channel caps: `Σ_{i in channel c} b_i <= cap_c`
-- uncertainty gate for increases: allow `b_i > b_prev_i` only if `P(u_i > u_min) >= 1 - alpha`
+- uncertainty gate for increases: `P(u_i > u_min) >= 1 - alpha`
 
-For target incremental revenue `X`, budget sweep is solved over feasible `B` and reports:
+For target incremental revenue `X`, the solver reports optimistic/expected/conservative budget points and per-channel budget ranges.
 
-- optimistic budget (`u + z*sd`)
-- expected budget (`u`)
-- conservative budget (`max(0, u - z*sd)`)
-
-This produces robust budget ranges rather than single-point recommendations.
-
-## Reliability deep dive (tested)
-
-Reliability is enforced by design and validated with smoke/regression tests:
-
-- hard stop when outcome source is disconnected
-- proxy-secondary behavior with conservative trust updates
-- proxy gating based on information score
-- uncertainty gate blocks unsafe budget increases
-- cold-start budget feasibility in ad-account mode
-- campaign bounds and channel caps enforced
-- paid-channel-only enforcement
-- optimizer feasibility flags for unreachable targets
-- low-volume smoothing toward prior state
-
-Validation is part of the engineering control system so autonomous runs remain consistent and auditable.
-
-## Logical hierarchy
+## Reliability and logic hierarchy (tested)
 
 1. **Data trust layer**
 - outcome connectivity gate
@@ -112,18 +53,27 @@ Validation is part of the engineering control system so autonomous runs remain c
 
 2. **Signal quality layer**
 - outcome-first modeling
-- proxy-secondary checks
-- low-volume stabilization
+- proxy-secondary gating
+- low-volume smoothing toward priors
 
 3. **Decision layer**
 - risk-adjusted campaign allocation
-- step/churn/inertia control
-- bounds and cap enforcement
+- step/churn/inertia controls
+- bounds and channel-cap enforcement
 
 4. **Governance layer**
-- verification and hard-fail alerts
+- hard-fail verification
 - explainability artifacts
-- target-`X` feasibility outputs
+- target-`X` feasibility flags
+
+Validated via smoke/regression tests for:
+- disconnected outcome hard stop
+- proxy trust conservatism
+- uncertainty gate enforcement
+- cold-start budget feasibility
+- campaign/channel constraints
+- paid-channel-only enforcement
+- unreachable target feasibility handling
 
 ## Visual overview
 
@@ -142,42 +92,73 @@ flowchart TD
     H --> L["optimal_budget_range.json (target X)"]
 ```
 
-## Ideal use cases
+## Installation paths
 
-- Growth teams running multi-channel paid acquisition.
-- Teams with low-to-mid conversion volumes needing stable recalculations.
-- Organizations needing defensible, auditable budget steering logic.
-- Businesses scaling performance marketing with stronger statistical discipline.
+### Approach 1 (recommended): Claude Code plugin marketplace from GitHub
 
-## Keywords and tags
+This repo includes `.claude-plugin/marketplace.json` and `.claude-plugin/plugin.json` for plugin-style distribution.
 
-`marketing`, `ai`, `claude`, `skills`, `codex`, `chatgpt`, `openclaw`, `growth`, `performance`, `budget`, `campaigns`, `incrementality`, `analytics`, `ga4`, `automation`, `feedback`, `mcp`, `secure`
-
-## Folder layout
-
-```text
-uplift-allocator/
-  SKILL.md
-  README.md
-  reference/
-  config/
-  scripts/
-  data/
-  artifacts/
-  tests/
+```bash
+/plugin marketplace add BeMoreDifferent/budget_and_performance_optimization_claude_skill
 ```
 
-## Autonomous execution model
+Then install `uplift-allocator` from the plugin marketplace UI/flow.
 
-- AI agent owns orchestration, execution, and feedback generation.
-- Mathematical constraints and gating logic enforce consistency.
-- Human users consume outputs, not operational commands.
+### Approach 2: Filesystem copy (manual)
+
+Copy `skills/uplift-allocator` into one of these scanned skill locations:
+
+- `~/.claude/skills/uplift-allocator`
+- `./.claude/skills/uplift-allocator`
+
+### Approach 3: One-command CLI installers
+
+```bash
+npx openskills install BeMoreDifferent/budget_and_performance_optimization_claude_skill
+npx openskills sync
+```
+
+or
+
+```bash
+npx add-skill BeMoreDifferent/budget_and_performance_optimization_claude_skill
+```
+
+## Spec compliance checklist
+
+- `skills/uplift-allocator/SKILL.md` exists.
+- `name` is kebab-case and matches folder name.
+- YAML frontmatter includes `name`, `description`, `license`.
+- No `README.md` inside skill folder.
+- Root README documents plugin/copy/CLI install paths.
+
+## Repository layout
+
+```text
+.claude-plugin/
+  marketplace.json
+  plugin.json
+skills/
+  uplift-allocator/
+    SKILL.md
+    reference/
+    config/
+    scripts/
+    data/
+    artifacts/
+    tests/
+README.md
+```
 
 ## Core outputs
 
-- `uplift-allocator/artifacts/allocation_plan.json`
-- `uplift-allocator/artifacts/allocation_explanations.md`
-- `uplift-allocator/artifacts/alerts.json`
-- `uplift-allocator/artifacts/optimal_budget_range.json` (when target `X` is provided)
+- `skills/uplift-allocator/artifacts/allocation_plan.json`
+- `skills/uplift-allocator/artifacts/allocation_explanations.md`
+- `skills/uplift-allocator/artifacts/alerts.json`
+- `skills/uplift-allocator/artifacts/optimal_budget_range.json`
 
-Runtime artifacts are gitignored by default (except GA connection status).
+Secure connection recommendation for outcome data: [SAFE MCP](https://safe-mcp.com/)
+
+## Keywords
+
+`marketing`, `ai`, `claude`, `skills`, `codex`, `chatgpt`, `openclaw`, `growth`, `performance`, `budget`, `campaigns`, `incrementality`, `analytics`, `ga4`, `automation`, `feedback`, `mcp`, `secure`

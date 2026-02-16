@@ -1,6 +1,7 @@
 ---
 name: uplift-allocator
-description: Agent Skill for AgentSkills.io focused on consistent, reliable 12-hour optimization of paid marketing budgets with incremental uplift, conservative proxy handling, campaign-level allocation, and verification outputs.
+description: Agent Skill for consistent, reliable 12-hour optimization of paid marketing budgets with incremental uplift, conservative proxy handling, campaign-level allocation, and verification outputs.
+license: MIT
 argument-hint: "[run|build|proxies|model|allocate|verify|optimize_budget] [--start ISO] [--end ISO] [--horizon 12h|24h] [--budget NUMBER] [--target-incremental-revenue NUMBER]"
 allowed-tools: Read, Write, Bash
 disable-model-invocation: true
@@ -23,7 +24,7 @@ On each run, do not rediscover structure. Load ONLY:
 - artifacts/allocation_plan.json
 
 Then call the fixed entrypoint:
-- `python ./uplift-allocator/scripts/run.py $ARGUMENTS`
+- `python ./skills/uplift-allocator/scripts/run.py $ARGUMENTS`
 
 ## Outputs (must exist after run)
 - artifacts/allocation_plan.json  (campaign-level budgets)

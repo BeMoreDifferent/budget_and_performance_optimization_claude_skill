@@ -1,0 +1,11 @@
+{
+  "name": "bemoredifferent-agent-skills",
+  "plugins": [
+    {
+      "name": "uplift-allocator",
+      "displayName": "Uplift Allocator",
+      "description": "Autonomous 12-hour incremental uplift budget optimization for paid marketing campaigns.",
+      "skills": ["skills/uplift-allocator"]
+    }
+  ]
+}
