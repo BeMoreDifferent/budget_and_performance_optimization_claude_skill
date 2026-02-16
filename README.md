@@ -12,7 +12,7 @@ Uplift Allocator is built for end users who want one thing: consistent, accurate
 - [How It Works (Simple)](#how-it-works-simple)
 - [Reliability (Tested)](#reliability-tested)
 - [Visual Overview](#visual-overview)
-- [Advanced: Mathematical Model](#advanced-mathematical-model)
+- [Tools and Functionalities (No Math)](#tools-and-functionalities-no-math)
 - [Repository Layout](#repository-layout)
 
 ## What You Get
@@ -109,30 +109,44 @@ flowchart TD
     H --> L["optimal_budget_range.json (target X)"]
 ```
 
-## Advanced: Mathematical Model
+## Tools and Functionalities (No Math)
 
-At entity level `i` and time bucket `t`:
+This skill uses multiple internal tools together to deliver reliable budget allocation for marketing teams. It is based on strong scientific research in incrementality, uncertainty handling, and controlled optimization, but the output is simple to use.
 
-- Saturation response:
-  - `g_i(b) = b^a / (b^a + theta^a)`
-- Incremental component:
-  - `inc_i(b) = V_i * u_i * g_i(b)`
-- Risk-adjusted objective:
-  - `score_i(b) = E[inc_i(b)] - gamma * SD[inc_i(b)] - lambda * (b - b_prev)^2`
+1. **Outcome Data Gate**
+- Checks if trusted outcome data is connected before any decision is made.
+- If data quality is not good enough, it stops instead of producing risky recommendations.
 
-Global optimizer:
+2. **Unified Performance View**
+- Combines campaign outcomes, spend, and supporting signals into one consistent view every 12 hours.
+- This avoids conflicting dashboards and fragmented decision-making.
 
-- `max Σ_i score_i(b_i)`
+3. **Signal Quality Controller**
+- Treats core business outcomes as primary.
+- Treats proxy signals as secondary hints only.
+- Prevents overreaction to noisy or low-volume changes.
 
-subject to:
+4. **Budget Allocation Engine**
+- Recommends budget shifts at campaign level for paid channels.
+- Focuses on reliable improvement, not aggressive short-term swings.
+- Supports both regular allocation and target-based planning (for a specific incremental revenue goal).
 
-- `Σ_i b_i = B`
-- `min_i <= b_i <= max_i`
-- `|b_i - b_prev_i| <= step_pct * max(1, b_prev_i)`
-- `Σ_{i in channel c} b_i <= cap_c`
-- increase gate: `P(u_i > u_min) >= 1 - alpha`
+5. **Reliability Guardrails**
+- Applies strict limits on how much budget can move in one cycle.
+- Enforces channel and campaign constraints.
+- Uses hold/alert logic when confidence is too low.
 
-For target incremental revenue `X`, solver reports optimistic/expected/conservative budget points and per-channel ranges.
+6. **Verification and Explainability**
+- Validates every plan before it is accepted.
+- Produces clear outputs for operations, stakeholders, and audit trails:
+  - allocation plan
+  - explanation summary
+  - reliability alerts
+  - target budget range output
+
+7. **Automation-Ready Operation**
+- Designed to run autonomously every 12 hours with OpenClaw, ChatGPT Codex, or Claude.
+- Gives marketing teams consistent feedback loops without manual analyst-heavy workflows.
 
 ## Repository Layout
 
