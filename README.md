@@ -1,81 +1,98 @@
 # Uplift Allocator Skill
 
-**An autonomous Agent Skill for consistent, reliable 12-hour optimization of paid marketing budgets.**
+**A ready-to-install AI skill for reliable marketing budget allocation.**
 
-Uplift Allocator is a high-complexity optimization system for steering advertising accounts from strategy level to campaign level. The AI runtime owns orchestration. The mathematical control logic owns consistency.
+Uplift Allocator is built for end users who want one thing: consistent, accurate budget allocation across paid campaigns without manual analysis every day.
 
-## 12-Hour autonomous AI loop
+## Navigation
 
-Designed for autonomous execution every 12 hours by:
-- OpenClaw
-- ChatGPT Codex
-- Claude
+- [What You Get](#what-you-get)
+- [Install (3 Easy Options)](#install-3-easy-options)
+- [Who This Is For](#who-this-is-for)
+- [How It Works (Simple)](#how-it-works-simple)
+- [Reliability (Tested)](#reliability-tested)
+- [Visual Overview](#visual-overview)
+- [Advanced: Mathematical Model](#advanced-mathematical-model)
+- [Repository Layout](#repository-layout)
 
-Each cycle produces budget recommendations, reliability checks, and explainability artifacts.
+## What You Get
 
-## Core value
+- Reliable campaign-level budget recommendations every 12 hours.
+- Stability controls to avoid overreacting to noisy, low-volume signals.
+- Paid-channel-only allocation logic.
+- Clear outputs for decisions and auditability.
 
-- Reliable campaign budget steering with strict risk controls.
-- Incremental uplift optimization with proxy signals treated as secondary.
-- Paid-channel-only allocation to protect spend quality.
-- Stable behavior in low-volume environments.
+Core outputs:
 
-## Mathematical deep dive
+- `skills/uplift-allocator/artifacts/allocation_plan.json`
+- `skills/uplift-allocator/artifacts/allocation_explanations.md`
+- `skills/uplift-allocator/artifacts/alerts.json`
+- `skills/uplift-allocator/artifacts/optimal_budget_range.json`
 
-At entity level `i` and time bucket `t`:
+## Install (3 Easy Options)
 
-- Saturation response:
-  - `g_i(b) = b^a / (b^a + theta^a)`
-- Incremental component:
-  - `inc_i(b) = V_i * u_i * g_i(b)`
-- Risk-adjusted objective:
-  - `score_i(b) = E[inc_i(b)] - gamma * SD[inc_i(b)] - lambda * (b - b_prev)^2`
+### Option 1 (Recommended): Claude Code Plugin Marketplace
 
-Global optimizer:
+```bash
+/plugin marketplace add BeMoreDifferent/budget_and_performance_optimization_claude_skill
+```
 
-- `max Σ_i score_i(b_i)`
+Then install `uplift-allocator` from the marketplace UI.
 
-subject to hard constraints:
+### Option 2: Copy the Skill Folder
 
-- `Σ_i b_i = B`
-- per-campaign bounds: `min_i <= b_i <= max_i`
-- step constraint: `|b_i - b_prev_i| <= step_pct * max(1, b_prev_i)`
-- channel caps: `Σ_{i in channel c} b_i <= cap_c`
-- uncertainty gate for increases: `P(u_i > u_min) >= 1 - alpha`
+Copy this folder into your skills location:
 
-For target incremental revenue `X`, the solver reports optimistic/expected/conservative budget points and per-channel budget ranges.
+- `skills/uplift-allocator`
 
-## Reliability and logic hierarchy (tested)
+Target location examples:
 
-1. **Data trust layer**
-- outcome connectivity gate
-- unified 12-hour data view
+- `~/.claude/skills/uplift-allocator`
+- `./.claude/skills/uplift-allocator`
 
-2. **Signal quality layer**
-- outcome-first modeling
-- proxy-secondary gating
-- low-volume smoothing toward priors
+### Option 3: One-Command CLI Install
 
-3. **Decision layer**
-- risk-adjusted campaign allocation
-- step/churn/inertia controls
-- bounds and channel-cap enforcement
+```bash
+npx openskills install BeMoreDifferent/budget_and_performance_optimization_claude_skill
+npx openskills sync
+```
 
-4. **Governance layer**
-- hard-fail verification
-- explainability artifacts
-- target-`X` feasibility flags
+or
 
-Validated via smoke/regression tests for:
+```bash
+npx add-skill BeMoreDifferent/budget_and_performance_optimization_claude_skill
+```
+
+## Who This Is For
+
+- Marketing teams running multiple paid channels and campaigns.
+- Operators who need consistent recommendations on a fixed cadence.
+- Teams that want automated feedback loops via OpenClaw, ChatGPT Codex, or Claude.
+
+## How It Works (Simple)
+
+1. Runs every 12 hours.
+2. Builds one unified performance view.
+3. Updates uplift and uncertainty state.
+4. Allocates paid-campaign budgets under strict risk controls.
+5. Verifies constraints and emits alerts/explanations.
+
+Secure outcome-data connection recommendation: [SAFE MCP](https://safe-mcp.com/)
+
+## Reliability (Tested)
+
+Validated with smoke/regression coverage for:
+
 - disconnected outcome hard stop
-- proxy trust conservatism
+- proxy-secondary trust behavior
 - uncertainty gate enforcement
 - cold-start budget feasibility
-- campaign/channel constraints
+- campaign bounds and channel caps
 - paid-channel-only enforcement
 - unreachable target feasibility handling
+- low-volume smoothing behavior
 
-## Visual overview
+## Visual Overview
 
 ```mermaid
 flowchart TD
@@ -92,47 +109,32 @@ flowchart TD
     H --> L["optimal_budget_range.json (target X)"]
 ```
 
-## Installation paths
+## Advanced: Mathematical Model
 
-### Approach 1 (recommended): Claude Code plugin marketplace from GitHub
+At entity level `i` and time bucket `t`:
 
-This repo includes `.claude-plugin/marketplace.json` and `.claude-plugin/plugin.json` for plugin-style distribution.
+- Saturation response:
+  - `g_i(b) = b^a / (b^a + theta^a)`
+- Incremental component:
+  - `inc_i(b) = V_i * u_i * g_i(b)`
+- Risk-adjusted objective:
+  - `score_i(b) = E[inc_i(b)] - gamma * SD[inc_i(b)] - lambda * (b - b_prev)^2`
 
-```bash
-/plugin marketplace add BeMoreDifferent/budget_and_performance_optimization_claude_skill
-```
+Global optimizer:
 
-Then install `uplift-allocator` from the plugin marketplace UI/flow.
+- `max Σ_i score_i(b_i)`
 
-### Approach 2: Filesystem copy (manual)
+subject to:
 
-Copy `skills/uplift-allocator` into one of these scanned skill locations:
+- `Σ_i b_i = B`
+- `min_i <= b_i <= max_i`
+- `|b_i - b_prev_i| <= step_pct * max(1, b_prev_i)`
+- `Σ_{i in channel c} b_i <= cap_c`
+- increase gate: `P(u_i > u_min) >= 1 - alpha`
 
-- `~/.claude/skills/uplift-allocator`
-- `./.claude/skills/uplift-allocator`
+For target incremental revenue `X`, solver reports optimistic/expected/conservative budget points and per-channel ranges.
 
-### Approach 3: One-command CLI installers
-
-```bash
-npx openskills install BeMoreDifferent/budget_and_performance_optimization_claude_skill
-npx openskills sync
-```
-
-or
-
-```bash
-npx add-skill BeMoreDifferent/budget_and_performance_optimization_claude_skill
-```
-
-## Spec compliance checklist
-
-- `skills/uplift-allocator/SKILL.md` exists.
-- `name` is kebab-case and matches folder name.
-- YAML frontmatter includes `name`, `description`, `license`.
-- No `README.md` inside skill folder.
-- Root README documents plugin/copy/CLI install paths.
-
-## Repository layout
+## Repository Layout
 
 ```text
 .claude-plugin/
@@ -149,16 +151,3 @@ skills/
 tests/
 README.md
 ```
-
-## Core outputs
-
-- `skills/uplift-allocator/artifacts/allocation_plan.json`
-- `skills/uplift-allocator/artifacts/allocation_explanations.md`
-- `skills/uplift-allocator/artifacts/alerts.json`
-- `skills/uplift-allocator/artifacts/optimal_budget_range.json`
-
-Secure connection recommendation for outcome data: [SAFE MCP](https://safe-mcp.com/)
-
-## Keywords
-
-`marketing`, `ai`, `claude`, `skills`, `codex`, `chatgpt`, `openclaw`, `growth`, `performance`, `budget`, `campaigns`, `incrementality`, `analytics`, `ga4`, `automation`, `feedback`, `mcp`, `secure`
