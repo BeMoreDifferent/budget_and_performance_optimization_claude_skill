@@ -4,6 +4,15 @@
 
 Uplift Allocator is a GA-first, contract-first optimization skill for teams that need to scale paid growth without guesswork. It combines incremental uplift logic, strict risk controls, and paid-channel-only budget execution so business users can make faster decisions with higher confidence.
 
+## 12-Hour AI feedback loop
+
+Run this skill every 12 hours with your preferred AI runtime:
+- OpenClaw
+- ChatGPT Codex
+- Claude
+
+Each run produces a fresh performance feedback package with budget recommendations, explanations, and risk alerts.
+
 ## Why this makes life better for business teams
 
 - **Faster decisions with lower risk:** refreshes allocation logic every 12 hours without sudden swings.
@@ -56,7 +65,7 @@ Uplift Allocator is a GA-first, contract-first optimization skill for teams that
 
 ## Keywords and tags
 
-`marketing-ai`, `claude-skills`, `claude-code-skills`, `growth-marketing-ai`, `performance-marketing-ai`, `ad-budget-optimization`, `incrementality-modeling`, `paid-media-optimization`, `ga4-marketing-analytics`, `campaign-budget-allocation`, `incrementality`, `incremental-uplift`, `budget-allocation`, `roi-optimization`, `growth-optimization`, `paid-media`, `campaign-optimization`, `bayesian-updates`, `decision-support`, `ga4`, `performance-marketing`, `martech`, `ad-spend-optimization`, `revenue-operations`
+`marketing`, `ai`, `claude`, `skills`, `codex`, `chatgpt`, `openclaw`, `growth`, `performance`, `budget`, `campaigns`, `incrementality`, `analytics`, `ga4`, `automation`, `feedback`, `mcp`, `secure`
 
 ## Folder layout
 
