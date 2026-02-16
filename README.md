@@ -56,7 +56,7 @@ Uplift Allocator is a GA-first, contract-first optimization skill for teams that
 
 ## Keywords and tags
 
-`marketing-mix-modeling`, `incrementality`, `incremental-uplift`, `budget-allocation`, `roi-optimization`, `growth-optimization`, `paid-media`, `campaign-optimization`, `bayesian-updates`, `decision-support`, `ga4`, `performance-marketing`, `martech`, `ad-spend-optimization`, `revenue-operations`
+`marketing-ai`, `claude-skills`, `claude-code-skills`, `growth-marketing-ai`, `performance-marketing-ai`, `ad-budget-optimization`, `incrementality-modeling`, `paid-media-optimization`, `ga4-marketing-analytics`, `campaign-budget-allocation`, `incrementality`, `incremental-uplift`, `budget-allocation`, `roi-optimization`, `growth-optimization`, `paid-media`, `campaign-optimization`, `bayesian-updates`, `decision-support`, `ga4`, `performance-marketing`, `martech`, `ad-spend-optimization`, `revenue-operations`
 
 ## Folder layout
 
