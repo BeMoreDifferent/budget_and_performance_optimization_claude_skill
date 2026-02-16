@@ -146,7 +146,7 @@ skills/
     scripts/
     data/
     artifacts/
-    tests/
+tests/
 README.md
 ```
 

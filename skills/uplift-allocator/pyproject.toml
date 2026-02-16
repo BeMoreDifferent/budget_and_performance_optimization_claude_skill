@@ -10,4 +10,4 @@ dependencies = [
 ]
 
 [tool.unittest]
-start-directory = "skills/uplift-allocator/tests"
+start-directory = "../../tests"
