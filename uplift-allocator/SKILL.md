@@ -1,6 +1,6 @@
 ---
 name: uplift-allocator
-description: GA-first incremental uplift allocator. Requires Google Analytics. Builds 12h unified view, keeps proxies secondary, updates uplift state, allocates total budget to campaign-level entities, verifies assumptions, and outputs plan+alerts.
+description: AI skill for consistent, reliable 12-hour optimization of paid marketing budgets. Uses incremental uplift with conservative proxy handling, campaign-level allocation, and verification outputs.
 argument-hint: "[run|build|proxies|model|allocate|verify|optimize_budget] [--start ISO] [--end ISO] [--horizon 12h|24h] [--budget NUMBER] [--target-incremental-revenue NUMBER]"
 allowed-tools: Read, Write, Bash
 disable-model-invocation: true

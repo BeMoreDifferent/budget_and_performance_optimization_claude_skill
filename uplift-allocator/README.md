@@ -2,7 +2,8 @@
 
 **The fastest way to turn growth strategy into reliable campaign-level budget actions every 12 hours.**
 
-Uplift Allocator is a GA-first, contract-first optimization skill for teams that need to scale paid growth without guesswork. It combines incremental uplift logic, strict risk controls, and paid-channel-only budget execution so business users can make faster decisions with higher confidence.
+Uplift Allocator is an AI-first, contract-first optimization skill for teams that need to scale paid growth without guesswork. It combines incremental uplift logic, strict risk controls, and paid-channel-only budget execution so business users can make faster decisions with higher confidence.
+It is designed as a high-complexity optimization system for reliable steering of advertising accounts from strategy level to campaign level.
 
 ## 12-Hour AI feedback loop
 
@@ -30,8 +31,8 @@ Each run produces a fresh performance feedback package with budget recommendatio
 
 ## Core capabilities
 
-1. **GA-Required Data Gate**
-- If GA is not connected, the run hard-stops to prevent low-trust optimization.
+1. **Outcome Data Gate**
+- If outcome data is not connected, the run hard-stops to prevent low-trust optimization.
 - Secure GA connection recommendation: [SAFE MCP](https://safe-mcp.com/).
 
 2. **12-Hour Unified Growth View**
