@@ -17,10 +17,12 @@ Uplift Allocator is built for end users who want one thing: consistent, accurate
 
 ## What You Get
 
-- Reliable campaign-level budget recommendations every 12 hours.
-- Stability controls to avoid overreacting to noisy, low-volume signals.
-- Paid-channel-only allocation logic.
-- Clear outputs for decisions and auditability.
+- A fully autonomous 12-hour feedback loop for paid marketing budget decisions.
+- Consistent, research-backed allocation recommendations at campaign level.
+- Lower decision risk through built-in stability controls and confidence guardrails.
+- No proxy overreaction: supporting signals are treated as hints, not decision drivers.
+- Paid-channel-only optimization so budget is not diluted into unpaid channels.
+- Stakeholder-ready outputs for execution, reporting, and audit trails.
 
 Core outputs:
 
